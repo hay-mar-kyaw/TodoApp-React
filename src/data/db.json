@@ -1,0 +1,19 @@
+{
+    "todos" :[
+        {
+            "id":1,
+            "title":"learn new things",
+            "completed":false
+        },
+        {
+            "id":2,
+            "title":"Thai class",
+            "completed":true
+        },
+        {
+            "id":3,
+            "title":"Lesson Tailwind Css",
+            "completed":false
+        }
+    ]
+}
