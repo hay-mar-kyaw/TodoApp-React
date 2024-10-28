@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 function App() {
 
   let [todos,setTodos] = useState([]);
+  let [count,setCount] = useState(0);
 
   useEffect(()=>{
     fetch("http://localhost:3000/todos")
@@ -74,17 +75,58 @@ fetch(`http://localhost:3000/todos/${todo.id}`,{
   })
 }
 
+//remaining items
+let remainingItem = todos.filter(todo => !todo.completed).length;
+
+//check all
+let checkAll = () =>{
+
+  // server side 
+  todos.forEach(updateTodo=>{
+    updateTodo.completed = true;
+
+    // calling update todo function 
+    updateTodoItem(updateTodo)
+  })
+
+  // client side 
+   setTodos((prevState) => {
+     return prevState.map(todo => {
+      return {...todo, completed : true}
+    })
+    }) 
+}
+//Clear all
+let clearAll = () =>{
+
+  // server side 
+  todos.forEach(t=>{
+    if(t.completed){
+      deleteTodo(t.id);
+    }
+
+    
+  })
+
+  // client side 
+    
+  setTodos(prevState => {
+    return prevState.filter(todo => !todo.completed)
+  })
+}
+
+
   return (
     <div className="todo-app-container">
       <div className="todo-app">
         <h2>Todo App</h2>
         <TodoForm addTodo={addTodo} />
         <TodoList todos={todos} deleteTodo={deleteTodo} updateTodoItem={updateTodoItem}/>        
-        <CheckAllAndRemaining />
+        <CheckAllAndRemaining  remainingItem={remainingItem} checkAll={checkAll}/>
         
         <div className="other-buttons-container">
           <TodoFilter/>
-          <ClearCompletedBtn/>
+          <ClearCompletedBtn clearAll={clearAll}/>
         </div>
       </div>
     </div>

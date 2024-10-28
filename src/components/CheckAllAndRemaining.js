@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function CheckAllAndRemaining() {
+export default function CheckAllAndRemaining({remainingItem, checkAll}) {
   return (
         <div className="check-all-container">
           <div>
-            <div className="button">Check All</div>
+            <div className="button" onClick={checkAll}>Check All</div>
           </div>
-          <span>3 items remaining</span>
+          <span>{remainingItem} item{remainingItem > 1 ? 's' : ''} remaining</span>
         </div>
   )
 }
